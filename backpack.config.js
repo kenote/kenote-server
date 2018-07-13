@@ -2,7 +2,8 @@ module.exports = {
   webpack: (config, options, webpack) => ({
     ...config,
     entry: {
-      main: './server/index.js'
+      main: './server/index.js',
+      initialize: './server/initialize.js'
     },
     plugins: [
       new webpack.DefinePlugin({
