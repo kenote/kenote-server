@@ -46,6 +46,10 @@ const schema = new Schema({
     type: Date, 
     default: Date.now
   },
+  // JWT 密钥
+  jwToken: {
+    type: String
+  },
   // 用户修改密码的密钥
   retrieveKey: {
     type: String

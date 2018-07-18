@@ -11,7 +11,7 @@ const populateStore = [
     select: ['_id', 'id', 'name', 'level']
   }
 ]
-const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, phone: 1, createAt: 1, updateAt: 1 }
+const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, phone: 1, createAt: 1, updateAt: 1, jwToken: 1 }
 
 const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
@@ -114,3 +114,5 @@ export const login = info => {
 }
 
 export const accessToken = query => findOne(query, populateStore, fieldStore)
+
+export const updateToken = (_id, jwToken) => updateOne({ _id }, { jwToken })

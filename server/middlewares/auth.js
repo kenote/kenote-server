@@ -19,8 +19,10 @@ export const startegy = new Strategy(jwtOptions, async (req, jwt_payload, done) 
   if (auth) {
     let level = auth.group.level
     let isAccess = req.baseUrl === jwt_payload.baseUrl && utils.isAccess({ level }, access[req.baseUrl])
-    if (isAccess) {
-      req.token = setToken(auth, req.baseUrl)
+    if (isAccess && req.headers.authorization.split(/\s+/)[1] === auth.jwToken) {
+      let token = setToken(auth, req.baseUrl)
+      await userProxy.updateToken(auth._id, token)
+      req.token = token
       done(null, auth)
     }
     else {
@@ -41,6 +43,7 @@ export const login = async (req, res, next) => {
       return res.api(null, Code.ERROR_LICENSE_PGAE)
     }
     let token = setToken(auth, req.baseUrl)
+    await userProxy.updateToken(auth._id, token)
     return next({ auth, token })
   } catch (error) {
     if (CustomError(error)) {
