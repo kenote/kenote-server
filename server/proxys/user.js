@@ -11,6 +11,7 @@ const populateStore = [
     select: ['_id', 'id', 'name', 'level']
   }
 ]
+const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, phone: 1, createAt: 1, updateAt: 1 }
 
 const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
@@ -69,7 +70,8 @@ export const createUser = info => {
   }
   let password = null
   if (info.password) {
-    password = encryptPwd(info.password)
+    let salt = Math.random().toString(36).substr(8)
+    password = encryptPwd(info.password, salt)
     _.unset(info, 'password')
   }
   return findOne({ $or: queryInfo })
@@ -108,7 +110,7 @@ export const login = info => {
       }
       return updateOne(query, last)
     })
-    .then( ret => findOne(query, populateStore, { _id: 1, id: 1, username: 1, group: 1 }) )
+    .then( ret => findOne(query, populateStore, fieldStore) )
 }
 
-export const accessToken = query => findOne(query, populateStore, { _id: 1, id: 1, username: 1, group: 1 })
+export const accessToken = query => findOne(query, populateStore, fieldStore)

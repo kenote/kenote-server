@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import passwordJWT from 'passport-jwt'
-import { session_secret } from '../config'
+import { session_secret, jwt_sign } from '../config'
 import * as userProxy from '../proxys/user'
 import { CustomError, Code } from '../error'
 import * as utils from '../utils'
+import access from '../config/access'
 
 const { ExtractJwt, Strategy } = passwordJWT
 const jwtOptions = {
@@ -13,19 +14,20 @@ const jwtOptions = {
   secretOrKey: session_secret
 }
 
-export const startegy = new Strategy(jwtOptions, async (req, jwt_payload, next) => {
-  let user = await userProxy.accessToken({ _id: jwt_payload._id })
-  if (user) {
-    let level = user.group.level
-    let isAccess = req.baseUrl === jwt_payload.baseUrl && utils.isAccess(req.baseUrl, { level })
+export const startegy = new Strategy(jwtOptions, async (req, jwt_payload, done) => {
+  let auth = await userProxy.accessToken({ _id: jwt_payload._id })
+  if (auth) {
+    let level = auth.group.level
+    let isAccess = req.baseUrl === jwt_payload.baseUrl && utils.isAccess({ level }, access[req.baseUrl])
     if (isAccess) {
-      next(null, user)
+      req.token = setToken(auth, req.baseUrl)
+      done(null, auth)
     }
     else {
-      next(null, false)
+      done(null, false)
     }
   } else {
-    next(null, false)
+    done(null, false)
   }
 })
 
@@ -34,12 +36,11 @@ export const login = async (req, res, next) => {
   try {
     let auth = await userProxy.login({ username, password })
     let level = auth.group.level
-    let isAccess = utils.isAccess(req.baseUrl, { level })
+    let isAccess = utils.isAccess({ level }, access[req.baseUrl])
     if (!isAccess) {
       return res.api(null, Code.ERROR_LICENSE_PGAE)
     }
-    let payload = { _id: auth._id, baseUrl: req.baseUrl }
-    let token = jwt.sign(payload, jwtOptions.secretOrKey, { expiresIn: '10h' })
+    let token = setToken(auth, req.baseUrl)
     return next({ auth, token })
   } catch (error) {
     if (CustomError(error)) {
@@ -51,3 +52,12 @@ export const login = async (req, res, next) => {
 }
 
 export const accessToken = passport.authenticate('jwt', { session: false })
+
+const setToken = (auth, baseUrl) => jwt.sign(
+  {
+    _id: auth._id, 
+    baseUrl 
+  }, 
+  jwtOptions.secretOrKey, 
+  jwt_sign
+)

@@ -1,7 +1,5 @@
 
 
 export default {
-  ['/api/v1']: {
-    level: value => value >= 1000
-  }
+  ['/api/v1']: ({ level }) => level >= 1000
 }
