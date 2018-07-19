@@ -67,7 +67,7 @@ mailer.asyncSend({
 
 ## 编写 `mjml` 模版
 
-模版文件后缀名为 `.mjml`，具体语法参照 [mjml官方文档](https://mjml.io/documentation)
+模版文件后缀名为 `.mjml`，具体语法参照 [mjml官方文档](https://mjml.io/documentation)
 
 ```html
 <mjml>
