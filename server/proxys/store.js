@@ -1,17 +1,9 @@
 import Promise from 'bluebird'
-import { groupDao as Dao } from '../models'
+import _ from 'lodash'
+import { storeDao as Dao } from '../models'
 import { addAndUpdateKeys } from './seq'
 import { callback } from '../utils'
-import { isMaster } from '../config/group'
-import { ErrorInfo } from '../error'
-import * as storeProxy from './store'
-
-const populateStore = [
-  {
-    path: 'store',
-    select: ['_id', 'upload_type']
-  }
-]
+import { Code, ErrorInfo } from '../error'
 
 const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
@@ -60,22 +52,4 @@ const dropAllIndexes = () => new Promise( (resolve, reject) => {
 
 export const clear = () => removeAll().then(dropAllIndexes)
 
-export const createGroup = info => {
-  let start = () => new Promise((resolve) => resolve(0))
-  info = { level: 1000, ...info }
-  if (isMaster(info.level)) {
-    start = () => counts({ level: info.level })
-  }
-  return start()
-    .then( ret => {
-      if (ret > 0) {
-        throw ErrorInfo(CODE.ERROR_GROUP_MASTER_ONLY)
-      }
-      return Promise.all([
-        addAndUpdateKeys('group'),
-        storeProxy.createStore(info.store || null)
-      ])
-    })
-    .then( ([id, store]) => create({ ...info, id, store: store._id }))
-    .then( ret => Promise.promisifyAll(ret).populateAsync(populateStore) )
-}
+export const createStore = (info = null) => addAndUpdateKeys('store').then( ret => create({ ...info, id: ret }) )

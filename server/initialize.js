@@ -5,6 +5,8 @@ import rules from './config/rules'
 import * as seqProxy from './proxys/seq'
 import * as grouProxy from './proxys/group'
 import * as userProxy from './proxys/user'
+import * as storeProxy from './proxys/store'
+import { store } from './config'
 
 const questions = [
   {
@@ -55,10 +57,13 @@ const questions = [
 ]
 
 const initialize = async () => {
+  let storeOpts = {
+    upload_type: _.keys(store)
+  }
   try {
     let userData = await inquirer.prompt(questions)
-    let clearAllData = await Promise.all([ seqProxy.clear(), grouProxy.clear(), userProxy.clear() ])
-    let group = await grouProxy.createGroup({ name: '创建者', level: 9999 })
+    await Promise.all([ seqProxy.clear(), grouProxy.clear(), userProxy.clear(), storeProxy.clear() ])
+    let group = await grouProxy.createGroup({ name: '创建者', level: 9999, store: storeOpts })
     let user = await userProxy.createUser({ ...userData, group: group._id })
     console.log(user)
     process.exit(0)

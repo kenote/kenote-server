@@ -7,10 +7,10 @@ module.exports = {
   HOST: '0.0.0.0',
   POST: 4000,
   site_name: 'Kenote',
+  site_url: 'http://0.0.0.0:4000',
   session_secret: 'kenote_secret',
-  jwt_sign: {
-    expiresIn: '10h'
-  },
+  store_root: 'uploadfile',
+  jwt_sign: {},
   mongo: {
     uri: 'mongodb://localhost:27017/kenote_server'
   },
@@ -27,5 +27,6 @@ module.exports = {
       pass: 'password'
     }
   },
+  store: {},
   ...project
 }

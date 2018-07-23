@@ -8,6 +8,7 @@ const defaultSftp = {
     'node-modules/**/*',
     '.gitgnore',
     '.git/**',
+    'uploadfile/**/*',
     'backpack.*',
     'deploy.*',
     'project.*',

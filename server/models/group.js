@@ -18,6 +18,11 @@ const schema = new Schema({
     type: Number, 
     default: 0 
   },
+  // Store 配置
+  store: {
+    type: Schema.Types.ObjectId,
+    ref: 'store'
+  }
 })
 
 export default new MongooseDao(mongoose.model('group', schema))

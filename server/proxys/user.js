@@ -8,7 +8,11 @@ import { Code, ErrorInfo } from '../error'
 const populateStore = [
   {
     path: 'group',
-    select: ['_id', 'id', 'name', 'level']
+    select: ['_id', 'id', 'name', 'level', 'store'],
+    populate: {
+      path: 'store',
+      select: ['_id', 'upload_type']
+    }
   }
 ]
 const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, phone: 1, createAt: 1, updateAt: 1, jwToken: 1 }

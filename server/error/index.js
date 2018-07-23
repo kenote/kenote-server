@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import util from 'util'
 import * as Code from './code'
 import * as Message from './message'
 

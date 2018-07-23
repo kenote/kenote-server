@@ -12,6 +12,7 @@ import passport from 'passport'
 
 import { HOST, PORT } from './config'
 import Status from './config/status'
+import controller from './routes'
 import apiV1 from './routes/api_v1'
 import { startegy } from './middlewares/auth'
 import restful from './middlewares/restful'
@@ -41,6 +42,7 @@ app.use(passport.initialize())
 app.use(restful)
 
 // Routes
+app.use('/', controller)
 app.use('/api/v1', cors(), apiV1)
 
 // 404 Not Found
