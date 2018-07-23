@@ -16,3 +16,4 @@ mongoose.connect(mongo.uri, options, err => {
 export { default as seqDao } from './seq'
 export { default as groupDao } from './group'
 export { default as userDao } from './user'
+export { default as storeDao } from './store'
