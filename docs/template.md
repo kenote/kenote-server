@@ -1,4 +1,4 @@
-# template - 关于模版
+# Template - 模版
 
 - 模版采用 `nunjucks` 模块
 - 放置在项目根目录下 `views/` 中，以 `.njk` 为后缀

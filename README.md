@@ -5,6 +5,7 @@ server for Kenote
 
 - [x] [Mailer](./docs/mailer.md)
 - [x] [Template](./docs/template.md)
+- [x] [Upload](./docs/upload.md)
 
 ## Project Structure
 
@@ -14,6 +15,7 @@ server for Kenote
 | docs | 目录 | 存放 `Markdown` 文档目录 |
 | mails | 目录 | 存放邮件模版目录，支持 `html`、`mjml` 格式 |
 | server | 目录 | 服务端 `ES6` 源码目录 |
+| uploadfile | 目录 | 上传文件根目录 |
 | views | 目录 | 存放 `HTML` 模版目录 |
 | .babelrc | 文件 | `Babel` 配置文件 |
 | backpack.config.js | 文件 | 源码编译配置文件 |

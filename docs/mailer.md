@@ -1,4 +1,4 @@
-# mailer - 关于邮件
+# Mailer - 邮件
 
 - 采用 `nodemailer` 模块发送邮件
 - `HTML` 模版支持 `mjml` 模块编写，放置在项目根目录下 `mails/` 中
