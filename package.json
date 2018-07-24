@@ -42,7 +42,12 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development backpack dev",
     "build": "cross-env NODE_ENV=production backpack build",
-    "initialize": "node ./build/initialize.js"
+    "initialize": "node ./build/initialize.js",
+    "start": "pm2 start ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "delete": "pm2 delete ecosystem.config.js",
+    "deploy": "node deploy.js"
   },
   "engines": {
     "node": ">=8.0.0"

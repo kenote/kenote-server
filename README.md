@@ -21,6 +21,8 @@ server for Kenote
 | backpack.config.js | 文件 | 源码编译配置文件 |
 | deploy.config.js | 文件 | 工程部署配置文件 |
 | deploy.js | 文件 | 工程部署执行文件 |
+| ecosystem.config | 文件 | PM2配置文件 |
+| nginx.default.conf | 文件 | Nginx配置模型 |
 | package.json | 文件 | 项目配置文件 |
 | project.ini | 文件 | 服务端工程配置文件 |
 
