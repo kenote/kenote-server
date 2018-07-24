@@ -2,7 +2,8 @@ import path from 'path'
 import fs from 'fs-extra'
 import Busboy from 'busboy'
 import bytes from 'bytes'
-import { store } from '../config'
+import { store, store_root } from '../config'
+import { getPath } from '../utils'
 import storeUtil from '../utils/store'
 import { Code } from '../error'
 
@@ -65,4 +66,13 @@ export const upload = (req, res, next) => {
   // 检测是否有文件上传
   busboy.on('finish', () => notFiles && res.api(null, Code.ERROR_UPLOAD_NOT_FILE) )
   req.pipe(busboy)
+}
+
+export const download = (req, res, next) => {
+  let { type, filename } = req.params
+  let uploadStore = store[type]
+  let rootDir = getPath(uploadStore.root_dir, store_root)
+  let filePath = path.resolve(rootDir, filename)
+  if (!fs.existsSync(filePath)) return res.notfound()
+  res.download(filePath)
 }

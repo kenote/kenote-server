@@ -67,3 +67,25 @@ request
  *   file_url: 'http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png'
  * }
 ```
+
+## 下载文件
+
+配置显示文件类型
+```ini
+; 定义 MIME-TYPES 类型，用于显示和下载
+[mimeTypes]
+display[] = image/png
+display[] = image/gif
+display[] = image/jpeg
+display[] = image/svg
+display[] = image/svg+xml
+```
+
+操作演示
+```bash
+# 显示，非 `display` 类型均为下载
+http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png
+
+# 下载
+http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png?down
+```

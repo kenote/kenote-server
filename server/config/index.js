@@ -28,5 +28,8 @@ module.exports = {
     }
   },
   store: {},
+  mimeTypes: {
+    display: []
+  },
   ...project
 }

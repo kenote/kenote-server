@@ -9,3 +9,13 @@ export const getTransports = (mailer) => {
 }
 
 export const getPath = (value, dir = 'uploadfile') => value.replace(/^\@/, path.resolve(process.cwd(), dir) + '/')
+
+export const getStoreKeys = (store, type = null) => {
+  let keys = Object.keys(store)
+  if (!type) return keys
+  let out_keys = []
+  for (let item of keys) {
+    if (store[item].store === type) out_keys.push(item)
+  }
+  return out_keys
+}
