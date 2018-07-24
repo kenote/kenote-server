@@ -6,6 +6,7 @@ server for Kenote
 - [x] [Mailer](./docs/mailer.md)
 - [x] [Template](./docs/template.md)
 - [x] [Upload](./docs/upload.md)
+- [x] [Deploy](./docs/deploy.md)
 
 ## Project Structure
 
