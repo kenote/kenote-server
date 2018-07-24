@@ -49,6 +49,17 @@ module.exports = {
       start: [
         'cd <远端工程目录>',
         'yarn restart'
+      ],
+      nginx: [
+        'cd <远端工程目录>',
+        `echo "${getNginxConf({
+          root_dir: '<远端工程目录>',
+          upstream_name: '<服务名称>',
+          upstream_port: '<内部端口号>',
+          server_port: '<外部端口号>',
+          server_name: '0.0.0.0'
+        })}" > nginx.conf`,
+        '<重启Nginx服务命令>',
       ]
     }
   }
