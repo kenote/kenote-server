@@ -2,7 +2,7 @@ import { Nuxt, Builder } from 'nuxt'
 import nuxtConfig from '../nuxt.config.js'
 
 // Init Nuxt.js
-nuxtConfig.dev = false
+nuxtConfig.dev = process.env.NODE_ENV !== 'production'
 const nuxt = new Nuxt(nuxtConfig)
 
 module.exports = app => {

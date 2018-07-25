@@ -3,7 +3,6 @@
  */
 const _ = require('lodash')
 const client = require('kenote-deploy-kit')
-const util = require('kenote-deploy-kit/lib/util')
 const Deploy = require('./deploy.config')
 
 const { target, argv } = _.zipObject([,,'target', 'argv'], process.argv)
@@ -18,7 +17,7 @@ if (argv === '--nginx' && _.has(Options, 'scripts.nginx')) {
   client.ssh(Options.sftp).exec(Options.scripts.nginx.join(' && '))
 }
 else {
-  client.sftp(Options.sftp).exec(null, err => {
+  client.sftp(Options.sftp).exec(null, () => {
     console.log(`Finished Upload Files!`)
     switch (argv) {
       case '--init': 

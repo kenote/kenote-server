@@ -14,7 +14,7 @@ module.exports = {
     'iview/dist/styles/iview.css',
     { src: '~assets/scss/main.scss', lang: 'scss' }
   ],
-  srcDir: 'src/',
+  srcDir: 'nuxt/',
   // Build
   build: {
     vendor: [

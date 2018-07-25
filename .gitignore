@@ -38,6 +38,7 @@ jspm_packages/
 build/
 uploadfile/
 .nuxt/
+.DS_Store
 project.ini
 deploy.config.js
 

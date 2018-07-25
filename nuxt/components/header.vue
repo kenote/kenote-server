@@ -1,6 +1,6 @@
 <template>
   <header>
-    <!-- 
+    <!--
     <div>
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <MenuItem name="1">
