@@ -26,6 +26,10 @@ export const upload = (req, res, next) => {
       fileSize: bytes(uploadStore.max_size)
     }
   })
+  let fileDir = ''
+  if (uploadStore.store === 'local' && req.query.dir) {
+    fileDir = req.query.dir.replace(/^(\/)|(\/)$/g, '') + '/'
+  }
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
     notFiles = false
     if(fileNum > 1) return
@@ -45,7 +49,7 @@ export const upload = (req, res, next) => {
     })
     let storeProxy = storeUtil(uploadStore.store, uploadStore.store_opts)
     let options = {
-      filename: filename,
+      filename: fileDir + filename,
       type
     }
     // 写入上传文件
