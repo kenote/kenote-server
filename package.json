@@ -20,6 +20,7 @@
     "ini": "^1.3.5",
     "inquirer": "^6.0.0",
     "is-json": "^2.0.1",
+    "iview": "^2.14.3",
     "jsonwebtoken": "^8.3.0",
     "kenote-node-utils": "^1.0.4",
     "lodash": "^4.17.10",
@@ -30,18 +31,23 @@
     "nodemailer": "^4.6.7",
     "nodemailer-smtp-transport": "^2.7.4",
     "nunjucks": "^3.1.3",
+    "nuxt": "^1.4.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "qn": "^1.3.0"
   },
   "devDependencies": {
+    "babel-plugin-component": "^1.1.1",
+    "babel-plugin-import": "^1.8.0",
     "backpack-core": "^0.7.0",
     "cross-env": "^5.2.0",
-    "kenote-deploy-kit": "^1.1.0"
+    "kenote-deploy-kit": "^1.1.0",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development backpack dev",
-    "build": "cross-env NODE_ENV=production backpack build",
+    "build": "cross-env NODE_ENV=production nuxt build && backpack build",
     "initialize": "node ./build/initialize.js",
     "start": "pm2 start ecosystem.config.js",
     "restart": "pm2 restart ecosystem.config.js",
@@ -50,6 +56,6 @@
     "deploy": "node deploy.js"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.11.0"
   }
 }

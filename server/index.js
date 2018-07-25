@@ -16,6 +16,7 @@ import controller from './routes'
 import apiV1 from './routes/api_v1'
 import { startegy } from './middlewares/auth'
 import restful from './middlewares/restful'
+import Nuxt from './nuxt'
 
 const app = express()
 const viewsDir  = path.resolve(process.cwd(), 'views')
@@ -44,6 +45,9 @@ app.use(restful)
 // Routes
 app.use('/', controller)
 app.use('/api/v1', cors(), apiV1)
+
+// Nuxt
+Nuxt(app)
 
 // 404 Not Found
 app.use('*', (req, res) => {

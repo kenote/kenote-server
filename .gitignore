@@ -37,6 +37,7 @@ node_modules/
 jspm_packages/
 build/
 uploadfile/
+.nuxt/
 project.ini
 deploy.config.js
 
