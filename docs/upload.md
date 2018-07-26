@@ -27,6 +27,8 @@ mime_type[] = application/json
 mime_type[] = application/octet-stream
 mime_type[] = text/markdown
 mime_type[] = application/zip
+; 是否加水印
+draw = true
 
 ; 七牛CDN相关配置
 [store.files.store_opts]
@@ -35,6 +37,14 @@ origin = http://cdn.youdomain.com
 uploadURL = http://up-z0.qiniu.com
 accessKey = your_accessKey
 secretKey = your_secretKey
+
+; 设置图片水印
+[drawText]
+color = '#ffffff'
+font = 'Comic Sans MS'
+size = 14
+text = @Kenote
+gravity = SouthEast
 ```
 
 ## 上传文件
@@ -85,6 +95,9 @@ display[] = image/svg+xml
 ```bash
 # 显示，非 `display` 类型均为下载
 http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png
+
+# 显示缩略图
+http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png?show=120|120
 
 # 下载
 http://0.0.0.0:4000/uploadfile/image/83ea7ebb55e8b75952e09ee0393169bb.png?down

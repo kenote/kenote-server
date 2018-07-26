@@ -7,7 +7,6 @@ import { getPath } from '../utils'
 import storeUtil from '../utils/store'
 import { Code } from '../error'
 
-
 export const upload = (req, res, next) => {
   let auth = req.user
   let authStore = auth.group.store
@@ -72,11 +71,11 @@ export const upload = (req, res, next) => {
   req.pipe(busboy)
 }
 
-export const download = (req, res, next) => {
+export const download = async (req, res, next) => {
   let { type, filename } = req.params
   let uploadStore = store[type]
   let rootDir = getPath(uploadStore.root_dir, store_root)
   let filePath = path.resolve(rootDir, filename)
   if (!fs.existsSync(filePath)) return res.notfound()
-  res.download(filePath)
+  res.download(filePath, uploadStore.draw)
 }

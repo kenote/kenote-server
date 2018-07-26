@@ -28,8 +28,16 @@ module.exports = {
     }
   },
   store: {},
+  drawText: {
+    color: '#ffffff',
+    font: 'Comic Sans MS',
+    size: 14,
+    text: '@Kenote',
+    gravity: 'SouthEast'
+  },
   mimeTypes: {
-    display: []
+    display: [],
+    image: []
   },
   ...project
 }

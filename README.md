@@ -1,7 +1,19 @@
 # kenote-server
 server for Kenote
 
+## Engines
+
+- `node` >= 8.11.0
+
 ## Features
+
+- [x] Express
+- [x] Json Web Tokens
+- [x] GraphicsMagick
+- [x] MongoDB
+- [x] Nuxt
+
+## Docs
 
 - [x] [Mailer](./docs/mailer.md)
 - [x] [Template](./docs/template.md)
@@ -15,6 +27,7 @@ server for Kenote
 | build | 目录 | 源码编译输出目录 |
 | docs | 目录 | 存放 `Markdown` 文档目录 |
 | mails | 目录 | 存放邮件模版目录，支持 `html`、`mjml` 格式 |
+| nuxt | 目录 | `Nuxt` 源码目录 |
 | server | 目录 | 服务端 `ES6` 源码目录 |
 | uploadfile | 目录 | 上传文件根目录 |
 | views | 目录 | 存放 `HTML` 模版目录 |
