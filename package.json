@@ -49,7 +49,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development backpack dev",
-    "build": "cross-env NODE_ENV=production nuxt build && backpack build",
+    "build": "cross-env NODE_ENV=production nuxt build && cross-env NODE_ENV=production backpack build",
     "initialize": "node ./build/initialize.js",
     "start": "pm2 start ecosystem.config.js",
     "restart": "pm2 restart ecosystem.config.js",

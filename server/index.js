@@ -19,7 +19,10 @@ import restful from './middlewares/restful'
 import Nuxt from './nuxt'
 
 const app = express()
+const staticDir = path.resolve(process.cwd(), 'public')
 const viewsDir  = path.resolve(process.cwd(), 'views')
+
+!fs.existsSync(staticDir) && fs.mkdirpSync(staticDir)
 
 // Views
 app.set('views', viewsDir)
@@ -41,6 +44,9 @@ app.use(passport.initialize())
 
 // Middlewares
 app.use(restful)
+
+// Static
+app.use(express.static(staticDir))
 
 // Routes
 app.use('/', controller)
