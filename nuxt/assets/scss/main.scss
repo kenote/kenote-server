@@ -1,45 +1,32 @@
-.page{
-	width: 1400px;
-	margin: 50px auto;
-	background: #fff;
-	border-radius: 4px;
-	//box-shadow: 0 0 6px rgba(100,100,100,0.4);
-	transition: all ease-in 0.3s;
-	padding: 0 30px;
-}
-/*页面过度动画*/
-.page-enter{
-	opacity: 1;
-}
-.page-enter-active{
-	opacity: 0;
-}
-.page-leave{
-	transform: translateY(0);
-	opacity: 1;
-}
-.page-leave-active{
-	transform: translateX(100px);
-	opacity: 0;
+
+html {
+	height: 100%;
 }
 
-@media screen and (max-width: 1400px) {
-	.page{
-		width: 1200px;
-	}
+body, #__nuxt, #__layout, .app {
+	height: inherit;
 }
-@media screen and (max-width: 1200px) {
-	.page{
-		width: 1000px;
-	}
+
+*, :after, :before {
+	box-sizing: border-box;
 }
-@media screen and (max-width: 960px) {
-	.page{
-		width: 100%;
-		margin: 20px 0;
-		padding: 0;
-		border-radius: 0;
-    	//box-shadow: 0 0 6px rgba(100,100,100,0.6);
-		//background: #f7f8fa;
-	}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit;
+}
+
+b, strong {
+	font-weight: bolder;
+}
+
+.iconfont {
+	font-family: iconfont!important;
+	font-size: inherit;
+	font-style: normal;
+	font-weight: 400!important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
