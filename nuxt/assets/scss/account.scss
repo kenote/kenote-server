@@ -10,7 +10,7 @@
   .logo {
     margin-left: 50px;
     img {
-      width: 100px;
+      height: 40px;
     }
   }
 
@@ -36,6 +36,7 @@
       a {
         padding: 10px;
         color: #969696;
+        text-decoration: none;
         //font-weight: 700;
 
         &.nuxt-link-active {
@@ -68,13 +69,18 @@
       vertical-align: middle;
       font-size: 15px;
       border-bottom: 0;
+      color: #646464;
+
+      &::placeholder {
+        color: #969696;
+      }
     }
 
     i {
       position: absolute;
       left: 12px;
-      top: 16px;
-      font-size: 18px;
+      top: 18px;
+      font-size: 15px;
       color: #969696;
     }
 
@@ -135,9 +141,53 @@
     outline: none;
     display: block;
     clear: both;
+    position: relative;
 
     &:hover {
       background: #3db922;
+    }
+    
+    i {
+      position: absolute;
+      left: 35%;
+      top: 30%;
+      transition: all .8s;
+      opacity: 0;
+    }
+
+    #sign-in-loading {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-top: -4px;
+      margin-right: 2px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        border-bottom-color: transparent;
+        vertical-align: middle;
+        animation: rolling .8s infinite linear;
+        z-index: 1;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
     }
   }
 
@@ -192,6 +242,7 @@
     ul {
       margin-bottom: 10px;
       list-style: none;
+      padding: 0;
 
       li {
         margin: 0 5px;
@@ -219,6 +270,10 @@
       color: #00bb29;
     }
 
+    .icon-QQ {
+      color: #498ad5;
+    }
+
     .icon-github-fill {
       color: #646464;
     }
@@ -229,7 +284,8 @@
   .account {
     background-color: #fff;
     .logo {
-      display: none;
+      margin: 0 auto 30px;
+      display: table;
     }
     .main {
       box-shadow: none;

@@ -1,0 +1,141 @@
+
+.navbar {
+	background-color: #ffffff;
+	border-bottom: 1px #f0f0f0 solid;
+	height: 56px;
+
+	&::before {
+		content: '';
+    display: table;
+	}
+
+	.width-limit {
+    //min-width: 768px;
+    max-width: 1440px;
+    margin: 0px auto;
+    padding-right: 10px;
+		
+		.logo {
+			float: left;
+			height: 56px;
+			padding: 0 20px;
+			display: flex;
+			align-items: center;
+
+			img {
+				height: 30px;
+			}
+    }
+    
+    .menu {
+      position: absolute;
+      right: -60px;
+			transition: all .8s;
+			padding: 15px;
+			
+			i {
+				font-size: 24px;
+				color: #969996;
+
+				&::before {
+    			transition: all .8s ;
+				}
+
+				&:hover {
+					color: #666666;
+				}
+			}
+    }
+
+		.btn {
+			//display: inline-block;
+			float: right;
+			font-weight: 400;
+    	text-align: center;
+			vertical-align: middle;
+			touch-action: manipulation;
+			cursor: pointer;
+			background-image: none;
+			white-space: nowrap;
+			padding: 6px 12px;
+			user-select: none;
+		}
+
+		.register {
+			width: 80px;
+			height: 38px;
+			line-height: 24px;
+			margin: 9px 5px 0 15px;
+			border: 1px solid rgba(236,97,73,.7);
+			border-radius: 20px;
+			font-size: 15px;
+			color: #ea6f5a;
+			background-color: transparent;
+		}
+
+		.login {
+			float: right;
+			margin: 11px 6px 0 10px;
+			font-size: 15px;
+			color: #969996;
+		}
+	}
+}
+
+.nav-dropdown {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.navbar {
+		.width-limit {
+			min-width: 304px;
+
+			.menu {
+				right: 0px;
+			}
+			
+			.btn {
+				display: none;
+			}
+		}
+	}
+
+	.nav-dropdown {
+		position: fixed;
+		z-index: 99999;
+		background-color: #fff;
+		transition: all .8s ;
+		overflow-y: auto;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 56px;
+		opacity: 1;
+		display: block;
+	
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			
+			li {
+				border-bottom: 1px #f0f0f0 solid;
+				height: 50px;
+				
+				a {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: inherit;
+					color: #969696;
+				}
+			}
+		}
+	}
+	
+	.nav-hidden {
+		bottom: 3000px;
+		opacity: .1;
+	}
+}

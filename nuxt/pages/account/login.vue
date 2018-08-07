@@ -12,28 +12,29 @@
         <form v-on:submit.prevent="submit">
           <div>
             <div class="input-prepend">
-              <input type="text" name="username" placeholder="手机号或邮箱" v-model="formItem.username" >
-              <Icon type="person" />
+              <input type="text" name="username" placeholder="用户名/邮箱/手机号" v-model="formItem.username" >
+              <i class="iconfont icon-person"></i>
             </div>
             <div class="input-prepend">
               <input type="password" name="password" placeholder="密码" v-model="formItem.password" >
-              <Icon type="locked" />
+              <i class="iconfont icon-lock"></i>
             </div>
           </div>
           <div class="remember-btn">
-            <Checkbox v-model="rememberMe" @on-change="changeRemember"><span>记住我</span></Checkbox>
+            <el-checkbox v-model="rememberMe" @change="changeRemember"><span>记住我</span></el-checkbox>
           </div>
           <div class="forget-btn">
-            <Dropdown trigger="click" placement="bottom-end" style="text-align:left;" @on-click="clickDrop">
-              <a href="javascript:;">登录遇到问题</a>
-              <DropdownMenu slot="list">
-                <DropdownItem name="phone">用手机号重置密码</DropdownItem>
-                <DropdownItem name="email">用邮箱重置密码</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <el-dropdown trigger="click" placement="bottom-end" @command="handleForget">
+              <a href="javascript:;">登录遇到问题?</a>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="phone">用手机号重置密码</el-dropdown-item>
+                <el-dropdown-item command="email">用邮箱重置密码</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </div>
-          <button class="sign-in-button">
-            登录
+          <button class="sign-in-button" v-bind:disabled="pending">
+            <i class="el-icon-loading" v-bind:style="{ opacity: pending ? 1 : 0 }"></i>
+            <span>登录</span>
           </button>
         </form>
         <div class="more-sign">
@@ -41,7 +42,7 @@
           <ul>
             <li v-for="sns in snsLogins">
               <a target="_blank" v-bind:href="sns.link">
-                <i class="icon iconfont2" v-bind:class="sns.icon"></i>
+                <i class="icon iconfont" v-bind:class="sns.icon"></i>
               </a>
             </li>
           </ul>
@@ -52,9 +53,12 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import * as http from '~/utils/http'
 
 export default {
   layout: 'account',
+  middleware: 'notAuthenticated',
   data () {
     return {
       formItem: {
@@ -62,6 +66,7 @@ export default {
         password: ''
       },
       rememberMe: true,
+      pending: false,
       snsLogins: [
         { name: 'weibo', link: 'javascript:;', icon: 'icon-weibo' },
         { name: 'weixin', link: 'javascript:;', icon: 'icon-wechat-fill' },
@@ -71,18 +76,40 @@ export default {
     }
   },
   methods: {
-    submit: (e) => {
+    submit (e) {
       let username = e.target.username.value
       let password = e.target.password.value
       let rememberMe = this.rememberMe === undefined ? this.a.data().rememberMe : this.rememberMe
-      console.log(username, password, rememberMe)
+      if (_.isEmpty(username.replace(/\s+/g, ''))) {
+        return this.$message.warning('用户名/邮箱/手机号不能为空')
+      }
+      if (_.isEmpty(password)) {
+        return this.$message.warning('密码不能为空')
+      }
+      this.pending = true
+      setTimeout(async () => {
+        try {
+          let result = await http.login({ username, password })
+          let { data, Status } = result
+          if (Status.code === 0) {
+            this.$store.commit('update', data)
+            this.$router.push({ path: '/' })
+            return
+          }
+          this.$message.warning(Status.message)
+        
+        } catch (error) {
+          this.$message.error(error.message)
+        }
+        this.pending = false
+      }, 800)
     },
     changeRemember: (value) => {
       this.rememberMe = value
     },
-    clickDrop: (e) => {
-      console.log(e)
-    }
+    handleForget: (key) => {
+      console.log(key)
+    },
   }
 }
 </script>

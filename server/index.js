@@ -6,11 +6,14 @@ import nunjucks from 'nunjucks'
 import bodyParser from 'body-parser'
 import methodOverride from 'method-override'
 import compress from 'compression'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import connectRedis from 'connect-redis'
 import cors from 'cors'
 import errorhandler from 'errorhandler'
 import passport from 'passport'
 
-import { HOST, PORT } from './config'
+import { HOST, PORT, session_secret, redis } from './config'
 import Status from './config/status'
 import controller from './routes'
 import apiV1 from './routes/api_v1'
@@ -19,6 +22,7 @@ import restful from './middlewares/restful'
 import Nuxt from './nuxt'
 
 const app = express()
+const RedisStore = connectRedis(session)
 const staticDir = path.resolve(process.cwd(), 'public')
 const viewsDir  = path.resolve(process.cwd(), 'views')
 
@@ -38,9 +42,28 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 app.use(methodOverride())
 app.use(compress())
 
+// cookie
+app.use(cookieParser(session_secret))
+
+// Session
+app.use(session({
+  secret: session_secret,
+  store: new RedisStore({ ...redis, db: Number(redis.db) }),
+  resave: true,
+  saveUninitialized: true
+}))
+
 // Oauth
 passport.use(startegy)
 app.use(passport.initialize())
+app.use(passport.session())
+
+passport.serializeUser((user, done) => 
+  done(null, user)
+)
+passport.deserializeUser((user, done) => 
+  done(null, user)
+)
 
 // Middlewares
 app.use(restful)

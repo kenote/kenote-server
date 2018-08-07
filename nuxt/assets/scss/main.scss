@@ -5,10 +5,15 @@ html {
 
 body, #__nuxt, #__layout, .app {
 	height: inherit;
+	margin: 0;
 }
 
 *, :after, :before {
 	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -22,11 +27,4 @@ b, strong {
 	font-weight: bolder;
 }
 
-.iconfont {
-	font-family: iconfont!important;
-	font-size: inherit;
-	font-style: normal;
-	font-weight: 400!important;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
+

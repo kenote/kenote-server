@@ -13,15 +13,15 @@
           <div>
             <div class="input-prepend">
               <input type="text" name="username" placeholder="你的昵称" v-model="formItem.username" >
-              <Icon type="person" />
+              <i class="iconfont icon-person"></i>
             </div>
             <div class="input-prepend">
               <input type="text" name="phone" placeholder="手机号" v-model="formItem.phone" >
-              <Icon type="iphone" />
+              <i class="iconfont icon-phone"></i>
             </div>
             <div class="input-prepend">
               <input type="password" name="password" placeholder="设置密码" v-model="formItem.password" >
-              <Icon type="locked" />
+              <i class="iconfont icon-lock"></i>
             </div>
           </div>
           <button class="sign-up-button">
@@ -40,7 +40,7 @@
           <ul>
             <li v-for="sns in snsLogins">
               <a target="_blank" v-bind:href="sns.link">
-                <i class="icon iconfont2" v-bind:class="sns.icon"></i>
+                <i class="icon iconfont" v-bind:class="sns.icon"></i>
               </a>
             </li>
           </ul>

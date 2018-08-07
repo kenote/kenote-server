@@ -11,20 +11,22 @@ module.exports = {
   },
   // Global CSS
   css: [
-    'iview/dist/styles/iview.css',
+    'element-ui/lib/theme-chalk/index.css',
     { src: '~assets/scss/main.scss', lang: 'scss' }
   ],
   srcDir: 'nuxt/',
   // Build
   build: {
     vendor: [
-      'iview'
+      //'element-ui',
+      'localforage',
+      'axios'
     ],
     babel: {
-      plugins: [['import',
+      plugins: [['component',
         {
-          libraryName: 'iview',
-          libraryDirectory: 'src/components'
+          libraryName: 'element-ui',
+          styleLibraryName: 'theme-chalk'
         },
         'transform-async-to-generator',
         'transform-runtime'
@@ -33,7 +35,7 @@ module.exports = {
     },
   },
   plugins: [
-    '~plugins/iview'
+    { src: '~plugins/element-ui', ssr: true },
   ],
   // 页面顶部loading效果  #04acf7
   loading: {
@@ -47,6 +49,6 @@ module.exports = {
   },
   // Router
   router: {
-    base: '/'
+    base: '/',
   }
 }

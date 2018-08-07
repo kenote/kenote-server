@@ -1,54 +1,79 @@
 <template>
   <header>
-    <!--
-    <div>
-      <Menu mode="horizontal" :theme="theme1" active-name="1">
-        <MenuItem name="1">
-          <Icon type="ios-paper"></Icon>
-          内容管理
-        </MenuItem>
-        <MenuItem name="2">
-          <Icon type="ios-people"></Icon>
-          用户管理
-        </MenuItem>
-        <Submenu name="3">
-          <template slot="title">
-            <Icon type="stats-bars"></Icon>
-            统计分析
-          </template>
-          <MenuGroup title="使用">
-            <MenuItem name="3-1">新增和启动</MenuItem>
-            <MenuItem name="3-2">活跃分析</MenuItem>
-            <MenuItem name="3-3">时段分析</MenuItem>
-          </MenuGroup>
-          <MenuGroup title="留存">
-            <MenuItem name="3-4">用户留存</MenuItem>
-            <MenuItem name="3-5">流失用户</MenuItem>
-          </MenuGroup>
-        </Submenu>
-        <MenuItem name="4">
-          <Icon type="settings"></Icon>
-          综合设置
-        </MenuItem>
-      </Menu>
-    </div>
-    <div>
-      
-    </div>
-    -->
+    <nav class="navbar">
+      <div class="width-limit" v-if="$store.state.authUser">
+        <a href="javascript:;" class="menu" v-on:click="hanleDropDown">
+          <i class="iconfont" v-bind:class="dropDown ? 'icon-close' : 'icon-menu'"></i>
+        </a>
+        <nuxt-link class="logo" to="/">
+          <img src="~/assets/img/logo.png" alt="Logo">
+        </nuxt-link>
+        <a class="btn login" href="/account/logout">
+          退出
+        </a>
+      </div>
+      <div class="width-limit" v-else>
+        <a href="javascript:;" class="menu" v-on:click="hanleDropDown">
+          <i class="iconfont" v-bind:class="dropDown ? 'icon-close' : 'icon-menu'"></i>
+        </a>
+        <nuxt-link class="logo" to="/">
+          <img src="~/assets/img/logo.png" alt="Logo">
+        </nuxt-link>
+        <nuxt-link class="btn register" to="/account/register">
+          注册
+        </nuxt-link>
+        <nuxt-link class="btn login" to="/account/login">
+          登录
+        </nuxt-link>
+      </div>
+    </nav>
+    <nav class="nav-dropdown" v-bind:class="dropDown ? '' : 'nav-hidden'">
+      <div class="nav_right" v-if="$store.state.authUser">
+        <ul>
+          <li>
+            <a href="/account/logout">
+              退出
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="nav_right" v-else>
+        <ul>
+          <li>
+            <nuxt-link to="/account/login">
+              登录
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/account/register">
+              注册
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </header>
 </template>
 
 <script>
+import '~/assets/scss/navbar.scss'
+import '~/assets/css/iconfont.css'
+
 export default {
   data () {
     return {
-      theme1: 'light'
+      dropDown: false
+    }
+  },
+  methods: {
+    hanleDropDown () {
+      console.log('hanleDropDown', this.dropDown)
+      this.dropDown = !this.dropDown
     }
   }
 }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
 
 </style>
