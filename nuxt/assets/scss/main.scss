@@ -27,4 +27,6 @@ b, strong {
 	font-weight: bolder;
 }
 
-
+input:focus {
+	outline: 0;
+}
