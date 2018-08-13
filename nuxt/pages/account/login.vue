@@ -92,7 +92,7 @@ export default {
           let result = await http.login({ username, password })
           let { data, Status } = result
           if (Status.code === 0) {
-            this.$store.commit('update', data)
+            this.$store.commit('updateAuth', data)
             this.$router.push({ path: '/' })
             return
           }

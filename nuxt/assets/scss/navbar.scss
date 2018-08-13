@@ -96,7 +96,7 @@
 				//margin-right: 15px;
 
 				&:hover {
-					background-color: #d3dce7;
+					background-color: #f3f5f7;
 				}
 
         &.nuxt-link-active, &.nuxt-link-exact-active {
@@ -110,6 +110,10 @@
 				&:first-of-type {
 					&.nuxt-link-active {
 						color: #666666;
+
+						&:hover {
+							background-color: #f3f5f7;
+						}
 					}
 					&.nuxt-link-exact-active {
 						color: #ea6f5a;
@@ -195,6 +199,10 @@
 				align-items: center;
 				height: inherit;
 				color: #969696;
+
+				&:hover {
+					background-color: #f3f5f7;
+				}
 			}
 
 			a.nuxt-link-active, a.nuxt-link-exact-active {
@@ -208,6 +216,10 @@
 			&:first-of-type {
 				a.nuxt-link-active {
 					color: #666666;
+
+					&:hover {
+						background-color: #f3f5f7;
+					}
 				}
 				a.nuxt-link-exact-active {
 					color: #ea6f5a;
