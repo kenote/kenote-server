@@ -303,12 +303,6 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/async-limiter/download/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
-async-validator@^1.8.2:
-  version "1.8.4"
-  resolved "http://registry.npm.taobao.org/async-validator/download/async-validator-1.8.4.tgz#74c3a324161e6207f5c56cc1c66725b5c597e506"
-  dependencies:
-    babel-runtime "6.x"
-
 async-validator@~1.8.1:
   version "1.8.5"
   resolved "http://registry.npm.taobao.org/async-validator/download/async-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
@@ -1009,10 +1003,6 @@ base@^0.11.1:
     isobject "^3.0.1"
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
-
-batch-processor@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/batch-processor/download/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -2116,7 +2106,7 @@ deepmerge@^1.2.0:
   version "1.5.2"
   resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
 
-deepmerge@^2.0.0, deepmerge@^2.1.0:
+deepmerge@^2.0.0:
   version "2.1.1"
   resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-2.1.1.tgz#e862b4e45ea0555072bf51e7fd0d9845170ae768"
 
@@ -2343,12 +2333,6 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
 electron-to-chromium@^1.3.47:
   version "1.3.51"
   resolved "http://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.51.tgz#6a42b49daaf7f22a5b37b991daf949f34dbdb9b5"
-
-element-resize-detector@^1.1.14:
-  version "1.1.14"
-  resolved "http://registry.npm.taobao.org/element-resize-detector/download/element-resize-detector-1.1.14.tgz#af064a0a618a820ad570a95c5eec5b77be0128c1"
-  dependencies:
-    batch-processor "^1.0.0"
 
 element-ui@^2.4.5:
   version "2.4.5"
@@ -3863,19 +3847,6 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-iview@^2.14.3:
-  version "2.14.3"
-  resolved "http://registry.npm.taobao.org/iview/download/iview-2.14.3.tgz#0f32a450f956cce2ac60a4df5a6eba30816a0708"
-  dependencies:
-    async-validator "^1.8.2"
-    deepmerge "^2.1.0"
-    element-resize-detector "^1.1.14"
-    js-calendar "^1.2.3"
-    lodash.throttle "^4.1.1"
-    popper.js "^1.14.1"
-    tinycolor2 "^1.4.1"
-    v-click-outside-x "^3.0.0"
-
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.8"
   resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.4.8.tgz#57a9b130888f956834aa40c5b165ba59c758f033"
@@ -3888,10 +3859,6 @@ js-beautify@^1.6.14:
     editorconfig "^0.13.2"
     mkdirp "~0.5.0"
     nopt "~3.0.1"
-
-js-calendar@^1.2.3:
-  version "1.2.3"
-  resolved "http://registry.npm.taobao.org/js-calendar/download/js-calendar-1.2.3.tgz#a583b0644b4e695ba394f344d103dbcc7a7a7d3e"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -4034,9 +4001,9 @@ kenote-deploy-kit@^1.1.0:
     scp2 "^0.5.0"
     url-parse-lax "^3.0.0"
 
-kenote-node-utils@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/kenote-node-utils/-/kenote-node-utils-1.0.4.tgz#8d020db5c5ec048ede31aa8e156c7cdd6c5b76fe"
+kenote-node-utils@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/kenote-node-utils/-/kenote-node-utils-1.0.5.tgz#efd07d8ba83e2a990b652a215d2e7294c8e20711"
   dependencies:
     ini "^1.3.5"
     is-json "^2.0.1"
@@ -4280,10 +4247,6 @@ lodash.templatesettings@^4.0.0:
   resolved "http://registry.npm.taobao.org/lodash.templatesettings/download/lodash.templatesettings-4.1.0.tgz#2b4d4e95ba440d915ff08bc899e4553666713316"
   dependencies:
     lodash._reinterpolate "~3.0.0"
-
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "http://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
 lodash.unescape@^4.0.1:
   version "4.0.1"
@@ -5737,10 +5700,6 @@ pleeease-filters@^4.0.0:
   dependencies:
     onecolor "^3.0.4"
     postcss "^6.0.1"
-
-popper.js@^1.14.1:
-  version "1.14.3"
-  resolved "http://registry.npm.taobao.org/popper.js/download/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -7585,10 +7544,6 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
-tinycolor2@^1.4.1:
-  version "1.4.1"
-  resolved "http://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.npmjs.org/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -7958,10 +7913,6 @@ utils-merge@1.0.1:
 uuid@^3.0.0, uuid@^3.1.0:
   version "3.3.2"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
-
-v-click-outside-x@^3.0.0:
-  version "3.0.3"
-  resolved "http://registry.npm.taobao.org/v-click-outside-x/download/v-click-outside-x-3.0.3.tgz#824c2551f9451e1c1cc62cc525c6084185d1fbf4"
 
 valid-data-url@^0.1.4:
   version "0.1.6"
