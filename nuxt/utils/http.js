@@ -5,6 +5,10 @@ export const accesstoken = async () => await $get('/account/accesstoken')
 
 export const login = async ({ username, password }) => await $post('/account/login', { username, password })
 
+export const register = async (info) => await $post('/account/register', info)
+
+export const check = async (type, info) => await $post(`/account/check_${type}`, info)
+
 export const upload = async (options = { type: 'files', dir: null }, files = [], done = null, headers = {}) => {
   let formData = new FormData()
   for (let item of files) {

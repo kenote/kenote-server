@@ -4,6 +4,7 @@ import * as utils from '../utils'
 import * as auth from '../middlewares/auth'
 import * as store from '../controller/store'
 import * as account from '../controller/account'
+import * as accountFilter from '../filters/control/account'
 
 const router = Router()
 const upload_type = utils.getStoreKeys(storeOpts).join('|')
@@ -17,6 +18,8 @@ router.get(`/uploadfile/:type(${download_type})/:filename`, store.download)
 
 // Account
 router.post('/account/login', auth.login, account.login)
+router.post('/account/check_:type(name|email|phone)', account.check)
+router.post('/account/register', accountFilter.register, account.register)
 router.get('/account/logout', account.logout)
 
 export default router
