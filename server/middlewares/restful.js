@@ -6,6 +6,7 @@ import { Code, ErrorInfo } from '../error'
 import { mimeTypes } from '../config'
 import Status from '../config/status'
 import * as imageUtil from '../utils/image'
+import { isObject } from 'util'
 
 export default (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -13,10 +14,10 @@ export default (req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization')
   res.setHeader('X-Powered-By', 'Kenote')
   // API
-  res.api = (data, code = Code.ERROR_STATUS_NULL, opts = null) => {
+  res.api = (data, error = Code.ERROR_STATUS_NULL, opts = null) => {
     let info = { 
       data, 
-      Status: ErrorInfo(code, opts, true) || null
+      Status: isObject(error) ? error : (ErrorInfo(error, opts, true) || null)
     }
     console.log('Restful API %s:', req.method, req.url, JSON.stringify(info, null, 2))
     return res.json(info)
