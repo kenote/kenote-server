@@ -19,7 +19,7 @@ router.get(`/uploadfile/:type(${download_type})/:filename`, store.download)
 // Account
 router.post('/account/login', auth.login, account.login)
 router.post('/account/check_:type(name|email|phone)', account.check)
-router.post('/account/register', accountFilter.register, account.register)
+router.post('/account/register', accountFilter.register, auth.register, account.login)
 router.get('/account/logout', account.logout)
 
 export default router

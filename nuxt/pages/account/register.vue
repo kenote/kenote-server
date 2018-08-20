@@ -178,8 +178,8 @@ export default {
             let result = await http.register(info)
             let { data, Status } = result
             if (Status.code === 0) {
-              //this.$store.commit('updateAuth', data)
-              //this.$router.push({ path: '/' })
+              this.$store.commit('updateAuth', data)
+              this.$router.push({ path: '/' })
               return
             }
             this.$message.warning(Status.message)

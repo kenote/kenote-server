@@ -34,10 +34,3 @@ export const check = (req, res) => {
     })
     .catch( err => next(err) )
 }
-
-export const register = (data, req, res, next) => {
-  // -- 注册
-  let { username, email, phone, password } = data
-
-  return res.api(data)
-}

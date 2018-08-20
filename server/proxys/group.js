@@ -17,7 +17,7 @@ const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
 })
 
-const findOne = (query, populate = null, fields = null) => new Promise((resolve, reject) => {
+export const findOne = (query, populate = null, fields = null) => new Promise((resolve, reject) => {
   Dao.model.findOne(query)
     .populate(populate || { path: '' })
     .select(fields)
@@ -26,7 +26,7 @@ const findOne = (query, populate = null, fields = null) => new Promise((resolve,
 
 const find = (query, populate = null, fields = null, sort = null, limit = 0, skip = 0) => new Promise((resolve, reject) => {
   Dao.model.find(query)
-    .populate(populate || { path: '' })
+    .populate(populate || populateStore)
     .select(fields)
     .sort(sort || { _id: -1 })
     .limit(limit)

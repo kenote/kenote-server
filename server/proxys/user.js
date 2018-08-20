@@ -4,6 +4,8 @@ import { userDao as Dao } from '../models'
 import { addAndUpdateKeys } from './seq'
 import { callback, encryptPwd, validPassword } from '../utils'
 import { Code, ErrorInfo } from '../error'
+import * as groupProxy from './group'
+import { setting as groupSetting } from '../config/group'
 
 const populateStore = [
   {
@@ -72,6 +74,9 @@ export const createUser = info => {
   if (info.email) {
     queryInfo.push({ email: info.email })
   }
+  if (info.phone) {
+    queryInfo.push({ phone: info.phone })
+  }
   let password = null
   if (info.password) {
     let salt = Math.random().toString(36).substr(8)
@@ -83,11 +88,14 @@ export const createUser = info => {
       if (!user) {
         return addAndUpdateKeys('user')
       }
-      if (info.username && ret.username === info.username) {
+      if (info.username && user.username === info.username) {
         throw ErrorInfo(Code.ERROR_USER_NAME_UNIQUE)
       }
-      if (info.email && ret.email === info.email) {
+      if (info.email && user.email === info.email) {
         throw ErrorInfo(Code.ERROR_USER_EMAIL_UNIQUE)
+      }
+      if (info.phone && user.phone === info.phone) {
+        throw ErrorInfo(Code.ERROR_USER_PHONE_UNIQUE)
       }
     })
     .then( ret => create({ ...info, ...password, id: ret }) )
@@ -120,3 +128,18 @@ export const login = info => {
 export const accessToken = query => findOne(query, populateStore, fieldStore)
 
 export const updateToken = (_id, jwToken) => updateOne({ _id }, { jwToken })
+
+export const register = (info) => {
+  let { unauthenticatedUser } = groupSetting
+  return groupProxy.findOne({ level: unauthenticatedUser.level })
+    .then( ret => {
+      if (!ret) {
+        return groupProxy.createGroup(unauthenticatedUser)
+      }
+      return ret
+    })
+    .then( group => {
+      return createUser({ ...info, group: group._id })
+    })
+    .then( ret => _.pick(ret, Object.keys(fieldStore)) )
+}

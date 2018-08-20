@@ -49,7 +49,21 @@ export const login = async (req, res, next) => {
     }
     return next(error)
   }
-  
+}
+
+export const register = async (data, req, res, next) => {
+  // -- 注册
+  try {
+    let auth = await userProxy.register(data)
+    let token = setToken(auth)
+    await userProxy.updateToken(auth._id, token)
+    return next({ auth, token })
+  } catch (error) {
+    if (CustomError(error)) {
+      return res.api(null, error.code)
+    }
+    return next(error)
+  }
 }
 
 export const accessToken = passport.authenticate('jwt', { session: false })

@@ -1,55 +1,38 @@
 <template>
   <header>
     <nav class="navbar">
-      <div class="width-limit" v-if="$store.state.authUser">
+      <div class="width-limit" >
         <a href="javascript:;" class="menu" v-on:click="hanleDropDown">
-          <i class="iconfont" v-bind:class="dropDown ? 'icon-close' : 'icon-menu'"></i>
+          <i class="iconfont" :class="dropDown ? 'icon-close' : 'icon-menu'"></i>
         </a>
         <nuxt-link class="logo" to="/">
           <img src="~/assets/img/logo.png" alt="Logo">
         </nuxt-link>
-        <a class="btn login" href="/account/logout">
+        <a class="btn login" href="/account/logout" v-if="$store.state.authUser">
           退出
         </a>
-      </div>
-      <div class="width-limit" v-else>
-        <a href="javascript:;" class="menu" v-on:click="hanleDropDown">
-          <i class="iconfont" v-bind:class="dropDown ? 'icon-close' : 'icon-menu'"></i>
-        </a>
-        <nuxt-link class="logo" to="/">
-          <img src="~/assets/img/logo.png" alt="Logo">
-        </nuxt-link>
-        <nuxt-link class="btn register" to="/account/register">
+        <nuxt-link class="btn register" to="/account/register" v-if="!$store.state.authUser">
           注册
         </nuxt-link>
-        <nuxt-link class="btn login" to="/account/login">
+        <nuxt-link class="btn login" to="/account/login" v-if="!$store.state.authUser">
           登录
         </nuxt-link>
-        <div class="navbar-collapse">
-          <nuxt-link class="btn" to="/">
-            <i class="iconfont icon-home" ></i>
-            首页
-          </nuxt-link>
-          <nuxt-link class="btn" to="/api/">
-            <i class="iconfont icon-API" ></i>
-            API接口
+        <div class="navbar-collapse" >
+          <nuxt-link v-for="navbar in navbars" :key="navbar.id" :to="navbar.to" class="btn">
+            <i class="iconfont" :class="navbar.icon" ></i>
+            {{ navbar.name }}
           </nuxt-link>
           <nav-search class="search" :submit="hanleSearch" v-model:value="$store.state.keywords" />
         </div>
       </div>
     </nav>
-    <nav class="nav-dropdown" v-bind:class="dropDown ? '' : 'nav-hidden'">
+    <nav class="nav-dropdown" :class="dropDown ? '' : 'nav-hidden'">
       <nav-search class="nav_search" :submit="hanleSearch" v-model:value="$store.state.keywords" />
       <div class="nav_left">
         <ul>
-          <li>
-            <a href="/" v-on:click.prevent="hanleLinkTo('/')" v-bind:class="hanleClassName('/')">
-              首页
-            </a>
-          </li>
-          <li>
-            <a href="/api" v-on:click.prevent="hanleLinkTo('/api')" v-bind:class="hanleClassName('/api')">
-              API接口
+          <li v-for="navbar in navbars">
+            <a :href="navbar.to" @click.prevent="hanleLinkTo(navbar.to)" :class="hanleClassName(navbar.to)">
+              {{ navbar.name }}
             </a>
           </li>
         </ul>
@@ -88,11 +71,15 @@ import NavSearch from './search'
 
 export default {
   components: {
-    NavSearch
+    NavSearch,
   },
   data () {
     return {
       dropDown: false,
+      navbars: [
+        { id: 0, name: '首页', to: '/', icon: 'icon-home' },
+        { id: 1, name: 'API接口', to: '/api', icon: 'icon-API' },
+      ]
     }
   },
   methods: {

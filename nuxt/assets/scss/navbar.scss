@@ -62,6 +62,10 @@
 			user-select: none;
 		}
 
+		.user {
+			float: right;
+		}
+
 		.register {
 			width: 80px;
 			height: 38px;
@@ -202,6 +206,10 @@
 
 				&:hover {
 					background-color: #f3f5f7;
+				}
+
+				&.search-btn:hover {
+					background-color: transparent;
 				}
 			}
 
