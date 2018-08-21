@@ -8,9 +8,20 @@
         <nuxt-link class="logo" to="/">
           <img src="~/assets/img/logo.png" alt="Logo">
         </nuxt-link>
-        <a class="btn login" href="/account/logout" v-if="$store.state.authUser">
-          退出
-        </a>
+        <div class="user" v-if="$store.state.authUser">
+          <el-dropdown>
+            <a class="btn" href="javascript:;">
+              <img src="~/assets/img/af794c831cae.png" />
+            </a>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item><i class="iconfont icon-person" ></i><span>我的主页</span></el-dropdown-item>
+              <el-dropdown-item><i class="iconfont icon-bookmark" ></i><span>收藏的文章</span></el-dropdown-item>
+              <el-dropdown-item><i class="iconfont icon-like" ></i><span>喜欢的文章</span></el-dropdown-item>
+              <el-dropdown-item><nuxt-link to="/setting"><i class="iconfont icon-setting" ></i><span>设置</span></nuxt-link></el-dropdown-item>
+              <el-dropdown-item><a href="/account/logout"><i class="iconfont icon-exittoapp" ></i><span>退出</span></a></el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <nuxt-link class="btn register" to="/account/register" v-if="!$store.state.authUser">
           注册
         </nuxt-link>
@@ -117,5 +128,21 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.el-dropdown-menu__item {
+  padding: 4px 20px;
 
+  .iconfont {
+    color: #ea6f5a;
+  }
+  span {
+    padding: 0 10px 0 15px;
+  }
+  a {
+    display: block;
+    color: #606266;
+  }
+  &:hover {
+    color: #606266;
+  }
+}
 </style>
