@@ -14,7 +14,7 @@ export const upload = async (options = { type: 'files', dir: null }, files = [],
   for (let item of files) {
     formData.append('files[]', item)
   }
-  await $upload(`/upload/${options.type}`, formData, done, headers)
+  return await $upload(`/upload/${options.type}`, formData, done, headers)
 }
 
 export const $get = async (url, params = null, opts = {}) => {
@@ -56,9 +56,8 @@ export const $upload = async (url, data, done, opts = {}) => {
       return data
     }],
     onUploadProgress: function (progressEvent) {
-      let percentage = Math.round((e.loaded * 100) / e.total) || 0
-      if (percentage < 100) {
-        console.log(percentage + '%')  // 上传进度
+      let percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total) || 0
+      if (percentage <= 100) {
         done(percentage)
       }
     },

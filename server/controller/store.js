@@ -2,16 +2,21 @@ import path from 'path'
 import fs from 'fs-extra'
 import Busboy from 'busboy'
 import bytes from 'bytes'
-import { store, store_root } from '../config'
-import { getPath } from '../utils'
+import { store, store_root, storeOptions } from '../config'
+import { getPath, isNull } from '../utils'
 import storeUtil from '../utils/store'
 import { Code } from '../error'
+import * as userProxy from '../proxys/user'
 
 export const upload = (req, res, next) => {
   let auth = req.user
   let authStore = auth.group.store
   let type = (req.params.type || 'files').toLowerCase()
   let uploadStore = store[type]
+  let uploadStoreKey = storeOptions[type]
+  let avatarFile = (auth[uploadStoreKey] || '').replace(/\s+/g, '')
+  let oldFilename = uploadStoreKey && !isNull(avatarFile) ? avatarFile : undefined
+  console.log(oldFilename)
   // 检测上传权限
   if (authStore.upload_type.indexOf(type) === -1) {
     return res.api(null, Code.ERROR_UPLOAD_FLAG_NULL)
@@ -48,11 +53,11 @@ export const upload = (req, res, next) => {
     })
     let storeProxy = storeUtil(uploadStore.store, uploadStore.store_opts)
     let options = {
-      filename: fileDir + filename,
+      filename: fileDir + (oldFilename || filename),
       type
     }
     // 写入上传文件
-    storeProxy.upload(file, options, (err, result) => {
+    storeProxy.upload(file, options, async (err, result) => {
       if (err) return next(err)
       if (isFileLimit) {
         uploadStore.store === 'local' && fs.removeSync(result.path)
@@ -62,6 +67,19 @@ export const upload = (req, res, next) => {
         file_name: result.key,
         file_size: fileSize,
         file_url: result.url
+      }
+      if (type === 'avatar') {
+        let newAuth = await userProxy.updateAvatar(auth._id, uploadInfo.file_name)
+        let authInfo = {
+          auth: {
+            ...newAuth._doc || newAuth,
+            avatar: uploadInfo.file_name
+          },
+          token: newAuth.jwToken
+        }
+        req.logIn(authInfo, err => {
+          if (err) { return next(err) }
+        })
       }
       return res.api(uploadInfo)
     })

@@ -1,5 +1,5 @@
 
-
+import { store } from './'
 
 export const isMaster = level => level === 9999
 
@@ -10,5 +10,33 @@ export const setting = {
     store: { 
       upload_type: [] 
     }
-  }
+  },
+  ['authenticatedUser']: { 
+    name: '认证用户', 
+    level: 2, 
+    store: { 
+      upload_type: ['avatar', 'wx_qrcode'] 
+    }
+  },
+  ['Creator']: { 
+    name: '创建者', 
+    level: 9999, 
+    store: { 
+      upload_type: Object.keys(store)
+    }
+  },
+  ['seniorAdministrator']: { 
+    name: '高级管理员', 
+    level: 9800, 
+    store: { 
+      upload_type: ['avatar', 'image', 'files', 'wx_qrcode']
+    }
+  },
+  ['generalAdministrator']: { 
+    name: '普通管理员', 
+    level: 9500, 
+    store: { 
+      upload_type: ['avatar', 'image', 'files', 'wx_qrcode']
+    }
+  },
 }

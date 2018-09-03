@@ -2,10 +2,11 @@ import Promise from 'bluebird'
 import _ from 'lodash'
 import { userDao as Dao } from '../models'
 import { addAndUpdateKeys } from './seq'
-import { callback, encryptPwd, validPassword } from '../utils'
+import { callback, encryptPwd, validPassword, isNull } from '../utils'
 import { Code, ErrorInfo } from '../error'
 import * as groupProxy from './group'
 import { setting as groupSetting } from '../config/group'
+import { store } from '../config'
 
 const populateStore = [
   {
@@ -17,7 +18,7 @@ const populateStore = [
     }
   }
 ]
-const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, phone: 1, createAt: 1, updateAt: 1, jwToken: 1 }
+const fieldStore = { _id: 1, id: 1, username: 1, group: 1, email: 1, avatar: 1, sex: 1, phone: 1, intro: 1, website: 1, repository: 1, wx_qrcode: 1, binds: 1, editor: 1, createAt: 1, updateAt: 1, jwToken: 1 }
 
 const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
@@ -143,3 +144,5 @@ export const register = (info) => {
     })
     .then( ret => _.pick(ret, Object.keys(fieldStore)) )
 }
+
+export const updateAvatar = (_id, avatar) => updateOne({ _id }, { avatar }).then( ret => findOne({ _id }, populateStore, fieldStore) )

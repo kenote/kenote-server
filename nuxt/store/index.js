@@ -4,7 +4,8 @@ export default () => new Vuex.Store({
   state: {
     accessToken: null,
     authUser: null,
-    keywords: ''
+    keywords: '',
+    avatarUrl: '/uploadfile/avatar/'
   },
   mutations:{
     updateAuth (state, data) {
@@ -13,6 +14,12 @@ export default () => new Vuex.Store({
     },
     updateKeyword (state, data) {
       state.keywords = data
+    },
+    updateAuthByAvatar (state, data) {
+      state.authUser = {
+        ...state.authUser,
+        avatar: data + '?' + Math.random()
+      }
     }
   },
   actions: {

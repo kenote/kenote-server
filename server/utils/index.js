@@ -19,3 +19,5 @@ export const getStoreKeys = (store, type = null) => {
   }
   return out_keys
 }
+
+export const getUrl = (value, dir = 'uploadfile') => value.replace(/^\@/, '/uploadfile/')

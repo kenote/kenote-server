@@ -64,7 +64,7 @@ const initialize = async () => {
     let userData = await inquirer.prompt(questions)
     await Promise.all([ seqProxy.clear(), grouProxy.clear(), userProxy.clear(), storeProxy.clear() ])
     let group = await grouProxy.createGroup({ name: '创建者', level: 9999, store: storeOpts })
-    let user = await userProxy.createUser({ ...userData, group: group._id })
+    let user = await userProxy.createUser({ ...userData, binds: ['email'], group: group._id })
     console.log(user)
     process.exit(0)
   } catch (error) {

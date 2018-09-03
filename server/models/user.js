@@ -24,9 +24,41 @@ const schema = new Schema({
   avatar: {
     type: String
   },
+  // 性别
+  sex: {
+    type: Number,
+    default: 0
+  },
+  // 个人简介
+  intro: {
+    type: String
+  },
+  // 个人网站
+  website: {
+    type: String
+  },
+  // 代码仓库
+  repository: {
+    type: Object,
+    default: {  }
+  },
+  // 微信二维码
+  wx_qrcode: {
+    type: String
+  },
   // 手机
   phone: {
     type: String
+  },
+  // 号码绑定
+  binds: {
+    type: Array,
+    default: []
+  },
+  // 默认编辑器
+  editor: {
+    type: String,
+    default: 'markdown'
   },
   // 密码加密值
   encrypt: {

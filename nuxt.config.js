@@ -5,6 +5,7 @@ module.exports = {
     title: 'Website for Kenote',
     meta: [
       { charset: 'utf-8' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=Edge' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no' },
       { hid: 'description', name: 'description', content: 'Website for Kenote' },
     ]
@@ -18,7 +19,7 @@ module.exports = {
   // Build
   build: {
     vendor: [
-      //'element-ui',
+      'vue-cropper',
       'localforage',
       'axios'
     ],
@@ -36,6 +37,7 @@ module.exports = {
   },
   plugins: [
     { src: '~plugins/element-ui', ssr: true },
+    { src: '~plugins/vue-cropper', ssr: false }
   ],
   // 页面顶部loading效果  #04acf7
   loading: {

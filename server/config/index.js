@@ -28,6 +28,7 @@ module.exports = {
     }
   },
   store: {},
+  storeOptions: {},
   drawText: {
     color: '#ffffff',
     font: 'Comic Sans MS',

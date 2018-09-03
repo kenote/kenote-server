@@ -84,6 +84,7 @@ var state = null
 
 export default {
   layout: 'account',
+  middleware: 'notAuthenticated',
   asyncData ({ params, query, redirect, store }) {
     //return redirect('/about')
   },

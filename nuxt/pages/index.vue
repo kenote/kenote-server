@@ -21,7 +21,6 @@ export default {
 
 <style>
   .el-carousel {
-    
 
   }
   .el-carousel__container {

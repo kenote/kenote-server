@@ -10,14 +10,16 @@
         </nuxt-link>
         <div class="user" v-if="$store.state.authUser">
           <el-dropdown>
-            <a class="btn" href="javascript:;">
-              <img src="~/assets/img/af794c831cae.png" />
+            <a class="btn" >
+              <img :src="$store.state.avatarUrl + $store.state.authUser.avatar" v-if="$store.state.authUser.avatar" />
+              <img src="~/assets/img/default_beauty.jpg" v-else-if="$store.state.authUser.sex === 2" />
+              <img src="~/assets/img/default_handsome.jpg" v-else />
             </a>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item><i class="iconfont icon-person" ></i><span>我的主页</span></el-dropdown-item>
               <el-dropdown-item><i class="iconfont icon-bookmark" ></i><span>收藏的文章</span></el-dropdown-item>
               <el-dropdown-item><i class="iconfont icon-like" ></i><span>喜欢的文章</span></el-dropdown-item>
-              <el-dropdown-item><nuxt-link to="/setting"><i class="iconfont icon-setting" ></i><span>设置</span></nuxt-link></el-dropdown-item>
+              <el-dropdown-item><nuxt-link to="/settings"><i class="iconfont icon-setting" ></i><span>设置</span></nuxt-link></el-dropdown-item>
               <el-dropdown-item><a href="/account/logout"><i class="iconfont icon-exittoapp" ></i><span>退出</span></a></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
