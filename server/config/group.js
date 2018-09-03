@@ -4,6 +4,13 @@ import { store } from './'
 export const isMaster = level => level === 9999
 
 export const setting = {
+  ['Creator']: { 
+    name: '创建者', 
+    level: 9999, 
+    store: { 
+      upload_type: Object.keys(store)
+    }
+  },
   ['unauthenticatedUser']: { 
     name: '未认证用户', 
     level: 1, 
@@ -16,13 +23,6 @@ export const setting = {
     level: 2, 
     store: { 
       upload_type: ['avatar', 'wx_qrcode'] 
-    }
-  },
-  ['Creator']: { 
-    name: '创建者', 
-    level: 9999, 
-    store: { 
-      upload_type: Object.keys(store)
     }
   },
   ['seniorAdministrator']: { 
