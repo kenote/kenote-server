@@ -1,7 +1,4 @@
 import axios from 'axios'
-import * as storage from './storage'
-
-export const accesstoken = async () => await $get('/account/accesstoken')
 
 export const login = async ({ username, password }) => await $post('/account/login', { username, password })
 
