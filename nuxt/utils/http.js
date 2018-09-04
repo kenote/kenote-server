@@ -4,7 +4,9 @@ export const login = async ({ username, password }) => await $post('/account/log
 
 export const register = async (info) => await $post('/account/register', info)
 
-export const check = async (type, info) => await $post(`/account/check_${type}`, info)
+export const check = async (type, info, headers = {}) => await $post(`/account/check_${type}`, info, headers)
+
+export const settings = async (info, headers = {}) => await $post('account/settings', info, headers)
 
 export const upload = async (options = { type: 'files', dir: null }, files = [], done = null, headers = {}) => {
   let formData = new FormData()

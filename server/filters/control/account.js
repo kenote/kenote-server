@@ -1,8 +1,9 @@
 
-import { filterData } from '../../utils'
+import { filterData, isNull } from '../../utils'
 import Rules from '../../config/rules'
 import { Code, Message } from '../../error'
 import util from 'util'
+import _ from 'lodash'
 
 const rules = {
   username: [
@@ -47,4 +48,41 @@ export const register = (req, res, next) => {
     }
     return next(data)
   }, options)
+}
+
+export const settings = (req, res, next) => {
+  let { nickname, email, phone, editor, sex, intro, website, repository } = req.body
+  let filters = []
+  if (nickname) {
+    filters.push({ key: 'nickname', rules: [Rules.nickname], value: nickname })
+  }
+  if (email) {
+    filters.push({ key: 'email', rules: [Rules.email], value: email })
+  }
+  if (phone) {
+    filters.push({ key: 'phone', rules: [Rules.phone], value: phone })
+  }
+  if (editor) {
+    filters.push({ key: 'editor', rules: [], value: editor })
+  }
+  if (!isNull(sex)) {
+    filters.push({ key: 'sex', rules: [], value: sex })
+  }
+  if (intro) {
+    filters.push({ key: 'intro', rules: [Rules.intro], value: intro, label: '个人简介' })
+  }
+  if (website) {
+    filters.push({ key: 'website', rules: [Rules.website], value: website, label: '个人网站' })
+  }
+  if (repository) {
+    filters.push({ key: 'repository', rules: [Rules.website], value: repository, label: `%s地址` })
+  }
+  filterData(filters, (data, message) => {
+    if (message) {
+      return res.api(null, message)
+    }
+    console.log(data)
+    return next(data)
+  })
+  //return next(data)
 }

@@ -43,6 +43,9 @@ export const ERROR_VALID_NICKNAME_REQUIRED = '昵称不能为空'
 export const ERROR_VALID_NICKNAME_FORMAT = '昵称格式错误，%s'
 export const ERROR_VALID_CHOOSEONE_MORE = '%s 必须设置一个'
 
+export const ERROR_VAILD_WEBSITE_FORMAT = '%s 不是个正确的网址'
+export const ERROR_VAILD_INTRO_BEYOND = '%s 超出最大字符限制'
+
 export const ERROR_RETRIEVE_NOT_SEND_CONTINUE = '请不要连续发送，间隔为60秒'
 export const ERROR_RETRIEVE_VALID_FAIL = '验证码错误'
 export const ERROR_RETRIEVE_VALID_TIMEOUT = '验证码超时'

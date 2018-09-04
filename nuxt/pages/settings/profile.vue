@@ -22,6 +22,7 @@
             placeholder="填写你的个人简介"
             :autosize="{ minRows: 4, maxRows: 4 }"
             resize="none"
+            v-model="formData.intro"
             >
           </el-input>
         </el-col>
@@ -31,7 +32,7 @@
           个人网站
         </el-col>
         <el-col :span="18" class="flex-column">
-          <el-input placeholder="http://你的网址"></el-input>
+          <el-input placeholder="http://你的网址" v-model="formData.website"></el-input>
           <p class="pull-right">填写后会在个人主页显示图标</p>
         </el-col>
       </el-row>
@@ -70,6 +71,8 @@
 </template>
 
 <script>
+import * as http from '~/utils/http'
+import { isNull } from '~/utils'
 
 export default {
   layout: 'setting',
@@ -79,6 +82,8 @@ export default {
     return {
       formData: {
         sex: authUser.sex || 0,
+        intro: authUser.intro,
+        website: authUser.website
       },
       socialBinds: [
         { name: '绑定微博', link: 'javascript:;', icon: 'icon-weibo' },
@@ -87,12 +92,36 @@ export default {
         { name: '绑定 github', link: 'javascript:;', icon: 'icon-github-fill' },
         { name: '绑定 Google+', link: 'javascript:;', icon: 'icon-google-plus' },
         { name: '绑定 豆瓣', link: 'javascript:;', icon: 'icon-douban' }
-      ]
+      ],
+      pending: false
     }
   },
   methods: {
     settingSave (e) {
-      console.log(Object.keys(this.formData))
+      let info = {}
+      for (let key in this.formData) {
+        if (!isNull(this.formData[key])) {
+          info[key] = this.formData[key]
+        }
+      }
+      this.pending = true
+      setTimeout(async () => {
+        try {
+          let result = await http.settings(info, { token: this.$store.state.accessToken })
+          let { data, Status } = result
+          if (Status.code === 0) {
+            this.$store.commit('updateAuthByInfo', data)
+            this.$message.success('保存成功！')
+            this.pending = false
+            return
+          }
+          this.$message.warning(Status.message)
+        
+        } catch (error) {
+          this.$message.error(error.message)
+        }
+        this.pending = false
+      }, 800)
     }
   }
 }

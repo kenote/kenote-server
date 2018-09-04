@@ -21,5 +21,6 @@ router.post('/account/login', auth.login, account.login)
 router.post('/account/check_:type(name|email|phone)', account.check)
 router.post('/account/register', accountFilter.register, auth.register, account.login)
 router.get('/account/logout', account.logout)
+router.post('/account/settings', auth.accessToken, accountFilter.settings, account.settings)
 
 export default router

@@ -24,14 +24,14 @@ const create = info => new Promise((resolve, reject) => {
   Dao.create(info, (err, doc) => callback(resolve, reject, err, doc))
 })
 
-const findOne = (query, populate = null, fields = null) => new Promise((resolve, reject) => {
+export const findOne = (query, populate = null, fields = null) => new Promise((resolve, reject) => {
   Dao.model.findOne(query)
     .populate(populate || { path: '' })
     .select(fields)
     .exec((err, doc) => callback(resolve, reject, err, doc))
 })
 
-const find = (query, populate = null, fields = null, sort = null, limit = 0, skip = 0) => new Promise((resolve, reject) => {
+export const find = (query, populate = null, fields = null, sort = null, limit = 0, skip = 0) => new Promise((resolve, reject) => {
   Dao.model.find(query)
     .populate(populate || { path: '' })
     .select(fields)
@@ -146,3 +146,12 @@ export const register = (info) => {
 }
 
 export const updateAvatar = (_id, avatar) => updateOne({ _id }, { avatar }).then( ret => findOne({ _id }, populateStore, fieldStore) )
+
+export const updateInfo = (_id, info) => {
+
+  return updateOne({ _id }, info)
+    .then( ret => findOne({ _id }, populateStore, fieldStore) )
+}
+
+
+

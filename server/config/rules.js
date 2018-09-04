@@ -28,5 +28,16 @@ export default {
     max: 12,
     message: Message.ERROR_VALID_NICKNAME_FORMAT,
     code: Code.ERROR_VALID_NICKNAME_FORMAT
+  },
+  ['website']: {
+    pattern: '^(https?:\/\/)',
+    message: Message.ERROR_VAILD_WEBSITE_FORMAT,
+    code: Code.ERROR_VAILD_WEBSITE_FORMAT
+  },
+  ['intro']: {
+    pattern: '[\s\S]*',
+    max: 300,
+    message: util.format(Message.ERROR_VAILD_INTRO_BEYOND, '%s', '300个字符'),
+    code: Code.ERROR_VAILD_INTRO_BEYOND
   }
 }

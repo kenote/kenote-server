@@ -16,7 +16,7 @@
           <el-input :placeholder="repo.placeholder" v-model="formData[repo.key]"></el-input>
         </el-col>
       </el-row>
-      <el-button native-type="submit" type="success" round class="setting-save">保存</el-button>
+      <el-button native-type="submit" type="success" round class="setting-save" :loading="pending">保存</el-button>
     </form>
 
   </div>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import * as http from '~/utils/http'
+import { isNull } from '~/utils'
 
 export default {
   layout: 'setting',
@@ -40,12 +42,37 @@ export default {
         { name: 'BitBucket', placeholder: '您的 BitBucket 主页', key: "bitbucket", icon: 'icon-bitbucket' },
         { name: '码云 Gitee', placeholder: '您的 码云Gitee 主页', key: "gitee" },
         { name: '码市', placeholder: '您的 码市Coding 主页', key: "coding", icon: 'icon-CN_codingnet' },
-      ]
+      ],
+      pending: false
     }
   },
   methods: {
     settingSave (e) {
-      console.log(this.formData)
+      let repository = {}
+      for (let key in this.formData) {
+        if (!isNull(this.formData[key].replace(/\s+/g, ''))) {
+          repository[key] = this.formData[key]
+        }
+      }
+      if (Object.keys(repository).length === 0) return
+      this.pending = true
+      setTimeout(async () => {
+        try {
+          let result = await http.settings({ repository }, { token: this.$store.state.accessToken })
+          let { data, Status } = result
+          if (Status.code === 0) {
+            this.$store.commit('updateAuthByInfo', data)
+            this.$message.success('保存成功！')
+            this.pending = false
+            return
+          }
+          this.$message.warning(Status.message)
+        
+        } catch (error) {
+          this.$message.error(error.message)
+        }
+        this.pending = false
+      }, 800)
     }
   }
 }

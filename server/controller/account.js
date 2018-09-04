@@ -16,7 +16,7 @@ export const logout = (req, res) => {
   return res.redirect('/')
 }
 
-export const check = (req, res) => {
+export const check = (req, res, next) => {
   // -- 查询账号
   let checkField = req.params.type
   checkField = checkField.replace('name', 'username')
@@ -25,12 +25,30 @@ export const check = (req, res) => {
     email: '邮箱',
     phone: '手机号'
   }
-  return userProxy.counts({ [checkField]: req.body.name })
-    .then( counts => {
-      if (counts > 0) {
+  let query = { [checkField]: req.body.name }
+  if (req.user) {
+    let { auth } = req.user
+    query = {
+      ...query,
+      _id: { $ne: auth._id }
+    }
+  }
+  return userProxy.findOne(query)
+    .then( ret => {
+      if (ret) {
         return res.api(null, Code.ERROR_VALID_USERNAME_OCCUPY, [typeName[checkField]])
       }
       return res.api({ valid: true })
     })
     .catch( err => next(err) )
+}
+
+export const settings = (data, req, res, next) => {
+  let auth = req.user
+  return userProxy.updateInfo(auth._id, data)
+    .then( ret => {
+      return res.api(ret)
+    })
+    .catch( err => next(err) )
+  //return res.api(data)
 }

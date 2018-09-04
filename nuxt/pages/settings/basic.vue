@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <form v-on:submit.prevent="settingSave">
+    <form ref="settingForm" v-on:submit.prevent="settingSave">
       <el-row>
         <el-col :span="6">
           <div class="avatar">
@@ -18,7 +18,7 @@
           昵称
         </el-col>
         <el-col :span="18">
-          <el-input v-model="formData.username" placeholder="请输入昵称"></el-input>
+          <el-input v-model="formData.nickname" placeholder="请输入昵称"></el-input>
         </el-col>
       </el-row>
       <el-row class="table-line">
@@ -45,8 +45,10 @@
           <span>已验证</span>
           <a href="javascript:;" class="cancel-bind" @click="cancelBind" name="phone">解除绑定</a>
         </el-col>
-        <el-col :span="18" v-else>
-          <el-input v-model="formData.phone" placeholder="请输入手机号"></el-input>
+        <el-col :span="18" v-else  v-bind:class="formErrors['phone'] ? 'error' : ''">
+          <el-input name="phone" v-model="formData.phone" placeholder="请输入手机号" @blur="handleInputBlur"></el-input>
+          <span v-if="formErrors['phone']">{{ formErrors['phone'] }}</span>
+          <a v-if="$store.state.authUser.phone" href="javascript:;" class="cancel-bind" @click="gotoBind" name="phone">立即验证</a>
         </el-col>
       </el-row>
       <el-row class="table-line">
@@ -58,7 +60,7 @@
           <el-radio v-model="formData.editor" label="markdown">Markdown</el-radio>
         </el-col>
       </el-row>
-      <el-button native-type="submit" type="success" round class="setting-save">保存</el-button>
+      <el-button native-type="submit" type="success" round class="setting-save" :loading="pending">保存</el-button>
     </form>
     <image-cropper 
       :visible="cropperVisible" 
@@ -71,6 +73,11 @@
 
 <script>
 import ImageCropper from '~/components/cropper.vue'
+import * as http from '~/utils/http'
+import { isNull } from '~/utils'
+import schema from 'async-validator'
+import Rules from '../../../server/config/rules'
+import _ from 'lodash'
 
 export default {
   components: {
@@ -82,11 +89,25 @@ export default {
     let { authUser } = store.state
     return {
       formData: {
-        username: authUser.username,
+        nickname: authUser.nickname || authUser.username,
         email: authUser.email,
         phone: authUser.phone,
         editor: authUser.editor
       },
+      formErrors: {
+        nickname: null,
+        email: null,
+        phone: null,
+      },
+      rules: {
+        email: [
+          { pattern: Rules['email'].pattern, message: Rules['email'].message }
+        ],
+        phone: [
+          { pattern: Rules['phone'].pattern, message: Rules['phone'].message }
+        ],
+      },
+      pending: false,
       cropperOptions: {},
       cropperVisible: false,
       cropperVisibleBefore: false
@@ -114,8 +135,106 @@ export default {
                 
         })
     },
+    gotoBind (e) {
+      let key = e.target.name
+      let binds = {
+        email: '邮箱',
+        phone: '手机'
+      }
+      this.$confirm(`确定要验证${binds[key]}?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: `验证${binds[key]}成功!`
+          });
+        })
+        .catch(() => {
+                
+        })
+    },
+    handleInputBlur (e) {
+      let { name, value } = e.target
+      let valids = {
+        email: this.validMail,
+        phone: this.validPhone,
+      }
+      let rules = _.pick(this.rules, [name])
+      let isValidator = _.find(rules[name], o => o.validator)
+      if (!isValidator) {
+        rules[name].push({ validator: valids[name] })
+      }
+      _.uniq(rules)
+      let validator = new schema(rules)
+      validator.validate({ [name]: value }, (errors, fields) => {
+        if (errors) {
+          this.formErrors[name] = errors[0].message
+          return
+        }
+        this.formErrors[name] = null
+      })
+
+    },
+    async validMail (rule, value, callback) {
+      let isValue = new RegExp(Rules['email'].pattern).test(value)
+      if (!isValue) {
+        return callback()
+      }
+      try {
+        let result = await http.check('email', { name: value }, { token: this.$store.state.accessToken })
+        let { data, Status } = result
+        if (Status.code === 0) {
+          return callback()
+        }
+        return callback(Status.message)
+      } catch (error) {
+        
+      }
+    },
+    async validPhone (rule, value, callback) {
+      let isValue = new RegExp(Rules['phone'].pattern).test(value)
+      if (!isValue) {
+        return callback()
+      }
+      try {
+        let result = await http.check('phone', { name: value }, { token: this.$store.state.accessToken })
+        let { data, Status } = result
+        if (Status.code === 0) {
+          return callback()
+        }
+        return callback(Status.message)
+      } catch (error) {
+        
+      }
+    },
     settingSave (e) {
-      console.log(Object.keys(this.formData))
+      let info = {}
+      for (let key in this.formData) {
+        if (!isNull(this.formData[key]) && this.$store.state.authUser.binds.indexOf(key) === -1) {
+          info[key] = this.formData[key]
+        }
+      }
+      this.pending = true
+      setTimeout(async () => {
+        try {
+          let result = await http.settings(info, { token: this.$store.state.accessToken })
+          let { data, Status } = result
+          if (Status.code === 0) {
+            this.$store.commit('updateAuthByInfo', data)
+            this.$message.success('保存成功！')
+            this.pending = false
+            return
+          }
+          this.$message.warning(Status.message)
+        
+        } catch (error) {
+          this.$message.error(error.message)
+        }
+        this.pending = false
+      }, 800)
     },
     cropperOpen () {
       this.cropperVisibleBefore = true

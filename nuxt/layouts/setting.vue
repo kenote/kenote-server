@@ -158,6 +158,21 @@ body {
       }
     }
 
+    &.error {
+      .el-input, .el-textarea {
+        //width: 335px;
+
+        .el-input__inner, .el-textarea__inner {
+          background-color: rgba(152, 77, 77, 0.1);
+          border: 1px #FF5722 solid;
+        }
+      }
+
+      span {
+        color: #FF5722;
+      }
+    }
+
     i {
       color: #969696;
       font-size: 14px;

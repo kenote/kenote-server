@@ -20,6 +20,9 @@ export default () => new Vuex.Store({
         ...state.authUser,
         avatar: data + '?' + Math.random()
       }
+    },
+    updateAuthByInfo (state, data) {
+      state.authUser = data
     }
   },
   actions: {
